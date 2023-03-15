@@ -21,7 +21,7 @@ server.run_listener()
 
 | Method | Assignment | Use |
 | - | - | - |
-| run_listener | Starts a request listener, processes them, and recursively does it again and again. | server.run_listener() |
-| handle | This method receives the request and passes it to the handler function. | server.handle(connection : socket, address : tuple) |
-| set_handler_func(self, handler_func) | Sets the current handler function to be called when a request is encountered. Returns the current object. | server.set_handler_func(handler_func) |
-| handler | The handler function takes two required arguments: address (ip and port from which the request was sent) and data (decoded request). The handler function returns the response as a bytecode. | server.handler(address : tuple, data : str)) |
+| run_listener | Starts a request listener, processes them, and recursively does it again and again. | ```server.run_listener()``` |
+| handle | This method receives the request and passes it to the handler function. | ```server.handle(connection : socket, address : tuple)``` |
+| set_handler_func(self, handler_func) | Sets the current handler function to be called when a request is encountered. Returns the current object. | ```server.set_handler_func(handler_func)``` |
+| handler | The handler function takes two required arguments: address (ip and port from which the request was sent) and data (decoded request). The handler function returns the response as a bytecode. | ```server.handler(address : tuple, data : str))``` |
