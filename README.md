@@ -19,8 +19,8 @@ server.run_listener()
 
 ### Methods of the Matrix class
 
-| Method | Assignment | Use |
-| - | - | - |
+| Method | Assignment |
+| - | - |
 | run_listener | Starts a request listener, processes them, and recursively does it again and again. |
 | handle | This method receives the request and passes it to the handler function.  |
 | set_handler_func(self, handler_func) | Sets the current handler function to be called when a request is encountered. Returns the current object.  |
