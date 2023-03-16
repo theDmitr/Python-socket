@@ -20,7 +20,7 @@ class Server:
         """ This method receives the request and passes it to the handler function. """
         print("Request received from " + str(address))
         try:
-            request = connection.recv(1024).decode("utf-8")
+            request = connection.recv(1024).decode()
             response = self.handler_func(address, request)
             connection.sendall(response.encode())
         except UnicodeDecodeError:
