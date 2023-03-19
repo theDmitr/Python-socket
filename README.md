@@ -10,7 +10,7 @@ An example of working with an object of the Server class:
 from server import Server
 
 def handler_func(address, data):
-    return b"<p>Hello, World!</p>"
+    return "<p>Hello, World!</p>"
 
 # Takes two required arguments: host (address) and port.
 server = Server("localhost", 80).set_handler_func(handler_func)
