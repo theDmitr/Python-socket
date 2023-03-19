@@ -35,7 +35,7 @@ class Server:
         return self
     
     @staticmethod
-    def handler(address : tuple, data : str) -> string:
+    def handler(address : tuple, data : str) -> str:
         """ The handler function takes two required arguments: address (ip and port from which the request was sent) and data (decoded request).
             The handler function returns the string response. """
         return "<p>Test</p>"   # or b"..."
