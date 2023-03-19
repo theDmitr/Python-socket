@@ -13,7 +13,7 @@ def handler_func(address, data):
     return "<p>Hello, World!</p>"
 
 # Takes two required arguments: host (address) and port.
-server = Server("localhost", 80).set_handler_func(handler_func)
+server = Server("localhost", 8080).set_handler_func(handler_func)
 server.run_listener()
 ```
 
