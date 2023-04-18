@@ -20,9 +20,7 @@ class Server:
         """ This method receives the request and passes it to the handler function. """
         print("Request received from " + str(address))
         try:
-            request = connection.recv(1024).decode()
-            response = self.handler_func(address, request)
-            connection.sendall(response.encode())
+            self.handler_func(connection, address, connection.recv(4096).decode())
         except UnicodeDecodeError:
             print("[ERROR] UnicodeDecodeError")
         finally:
@@ -35,7 +33,6 @@ class Server:
         return self
     
     @staticmethod
-    def handler(address : tuple, data : str) -> str:
-        """ The handler function takes two required arguments: address (ip and port from which the request was sent) and data (decoded request).
-            The handler function returns the string response. """
-        return "<p>Test</p>"   # or b"..."
+    def handler(connection : socket, address : tuple, request : str) -> None:
+        response = "<p>Test</p>"
+        connection.sendall(response.encode())
