@@ -1,38 +1,48 @@
 import socket, ssl
+from threading import Thread
+from request import Request
 
 class Server:
-    """ Implements a socket for accepting and processing HTTP requests. """
-    def __init__(self, host : str, port : int) -> None:
-        """ Takes two required arguments: host (address) and port. """
+    def __init__(self, host, port):
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         self.sock.bind((host, port))
         self.sock.listen(1)
         self.handler_func = Server.handler
+        self.running = False
 
-    def run_listener(self) -> None:
-        """ Starts a request listener, processes them, and recursively does it again and again. """
-        connection, address = self.sock.accept()
-        self.handle(connection, address)
-        self.run_listener()
+    def run_listener(self):
+        self.running = True
+        thread = Thread(target = self.run_handler)
+        thread.start()
+        thread.join()
     
-    def handle(self, connection : socket, address : tuple) -> None:
-        """ This method receives the request and passes it to the handler function. """
-        print("Request received from " + str(address))
+    def run_handler(self):
+        while self.running:
+            connection, address = self.sock.accept()
+            Thread(target = self.handle, args = [connection, address]).start()
+
+    def stop_listener(self):
+        self.running = False
+    
+    def handle(self, connection, address):
         try:
-            self.handler_func(connection, address, connection.recv(4096).decode())
+            request = None
+            while not request:
+                request = connection.recv(1024).decode()
+            self.handler_func(connection, address, Request(request))
         except UnicodeDecodeError:
-            print("[ERROR] UnicodeDecodeError")
+            pass
+        except Exception as e:
+            print(e)
         finally:
             connection.close()
     
     def set_handler_func(self, handler_func):
-        """ Sets the current handler function to be called when a request is encountered.
-            Returns the current object. """
         self.handler_func = handler_func
         return self
     
     @staticmethod
-    def handler(connection : socket, address : tuple, request : str) -> None:
+    def handler(connection, address, request):
         response = "<p>Test</p>"
         connection.sendall(response.encode())
